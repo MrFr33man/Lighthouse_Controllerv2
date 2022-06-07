@@ -9,6 +9,8 @@ import java.io.IOException;
 /**
  * LEDHelper ist eine Helperklasse, die für das Handling der Objekte der Klasse LED zuständig ist.
  * Es enthält ein Array zur Speicherung eines Pakets an LEDs, welche dann per OSC versendet werden
+ * Das Lighthouse hat 8 Zeilen      --> x index 0-7
+ * Das Lighthouse hat 35 Spalten    --> y index 0-34
  */
 
 public class LEDHelper {
@@ -78,8 +80,8 @@ public class LEDHelper {
      * @param r
      * @param g
      * @param b
-     * @param xIndex
-     * @param yIndex
+     * @param xIndex 0-34
+     * @param yIndex 0-7
      */
     void SaveLedInfo(int r, int g, int b, int xIndex, int yIndex)
     {
@@ -202,6 +204,15 @@ public class LEDHelper {
 
     }
 
+    /**
+     * Malt eine ganze Spalte im angegebenen RBG-Wert an
+     * @param r
+     * @param g
+     * @param b
+     * @param index 0-34
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void ActivateColumn(int r, int g, int b, int index) throws OSCSerializeException, IOException {
 
         for (int y = 0; y <= 7; y++) {
@@ -212,6 +223,17 @@ public class LEDHelper {
 
     }
 
+    /**
+     * Malt einen Teil von (from) bis (to) in Spalte X in dem RGB-Wert an
+     * @param r
+     * @param g
+     * @param b
+     * @param x 0-34
+     * @param from
+     * @param to
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void ActivateColumnDynamic(int r, int g, int b, int x, int from, int to) throws OSCSerializeException, IOException {
 
         for (int y = from; y <= to; y++) {
@@ -222,6 +244,15 @@ public class LEDHelper {
 
     }
 
+    /**
+     * Malt eine Zeile in dem angegebenen RBG-Wert an
+     * @param r
+     * @param g
+     * @param b
+     * @param index 0-7
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void ActivateRow(int r, int g, int b, int index) throws OSCSerializeException, IOException {
 
         for (int x = 0; x <= 34; x++) {

@@ -34,7 +34,7 @@ public class Main {
          * nach OSC-Nachrichten horchen kann
          */
         while (true) {
-
+            Thread.sleep(1);
         }
     }
 

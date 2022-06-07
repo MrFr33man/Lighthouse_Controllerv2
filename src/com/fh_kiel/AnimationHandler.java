@@ -6,6 +6,8 @@ import java.io.IOException;
 /**
  * AnimationHandler dient zum aufrufen der Methoden für Animationen, welche Objekte
  * der Klasse LED in ein Array der LEDHelper schreiben, welches dann iterativ über OSC versendet wird
+ * Das Lighthouse hat 8 Zeilen      --> x index 0-7
+ * Das Lighthouse hat 35 Spalten    --> y index 0-34
  * @author Alexander Munkelt & Fabian Gusek
  */
 
