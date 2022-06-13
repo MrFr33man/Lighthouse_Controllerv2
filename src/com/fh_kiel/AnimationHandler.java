@@ -10,7 +10,6 @@ import java.io.IOException;
  * Das Lighthouse hat 35 Spalten    --> y index 0-34
  * @author Alexander Munkelt & Fabian Gusek
  */
-
 public class AnimationHandler {
 
     /**
@@ -40,7 +39,6 @@ public class AnimationHandler {
     /**
      * WriteUmgebung() malt den den statischen Hintergrund für die Superman-Animation(JumpNRun)
      */
-
     void WriteUmgebung(){
         helper.SaveLedInfo(255, 0, 0, 15, 5);
         helper.SaveLedInfo(255, 255, 255, 15, 6);
@@ -61,12 +59,13 @@ public class AnimationHandler {
      * @throws OSCSerializeException
      * @throws IOException
      */
-
     void JumpNRun() throws InterruptedException, OSCSerializeException, IOException {
+
+        int delay = 100;
 
         //Diverschen 64,110,122 Frame 1
         for (int j = 34; j >= 25; j--){
-            Thread.sleep(100);
+            Thread.sleep(delay);
             helper.leds.clear();
 
             WriteUmgebung();
@@ -214,7 +213,6 @@ public class AnimationHandler {
      * @throws OSCSerializeException
      * @throws IOException
      */
-
     void SwipeRight() throws InterruptedException, OSCSerializeException, IOException {
 
         int delay = 100;
@@ -269,7 +267,6 @@ public class AnimationHandler {
      * @throws OSCSerializeException
      * @throws IOException
      */
-
     void SwipeLeft() throws InterruptedException, OSCSerializeException, IOException {
 
         int delay = 100;

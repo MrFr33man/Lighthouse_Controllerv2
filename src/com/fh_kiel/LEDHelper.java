@@ -12,7 +12,6 @@ import java.io.IOException;
  * Das Lighthouse hat 8 Zeilen      --> x index 0-7
  * Das Lighthouse hat 35 Spalten    --> y index 0-34
  */
-
 public class LEDHelper {
 
     private static OSCPortOut oscPortOut;
@@ -31,8 +30,14 @@ public class LEDHelper {
         }
     }
 
+    /**
+     * Erstellt den LEDHelper mit einem OSCPortOut und der zugehörigen IP und Port.
+     * @throws IOException
+     */
     private LEDHelper() throws IOException {
-        oscPortOut = new OSCPortOut(new InetSocketAddress("localhost", 9001));
+        oscPortOut = new OSCPortOut(new InetSocketAddress("149.222.206.225", 9000));
+        //Localhost
+        //oscPortOut = new OSCPortOut(new InetSocketAddress("localhost", 9001));
         oscPortOut.connect();
     }
 
@@ -124,13 +129,12 @@ public class LEDHelper {
                 for (int i = 0; i < leds.size(); i++) {
                     // Current Led gets changed
                     if (leds.get(i).gotIndex(x,y)){
-
                         SendLedInfo(leds.get(i));
+                        i = leds.size();
                         break;
 
                     } // Clear
-                    else {
-
+                    else if (i == leds.size()-1) {
                         SendLedInfo(new Led(0,0,0,x,y));
 
                     }
@@ -154,6 +158,10 @@ public class LEDHelper {
         return randomNum;
     }
 
+    /**
+     * ActivateColumnRandomColor aktiviert eine komplette Spalte an Leds in einer random Farbe.
+     * @param index
+     */
     void ActivateColumnRandomColor(int index) {
 
         int r;
@@ -179,6 +187,12 @@ public class LEDHelper {
 
     }
 
+    /**
+     * ActivateRowRandomColor aktiviert eine komplette Reihe an Leds in einer random Farbe.
+     * @param index
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void ActivateRowRandomColor(int index) throws OSCSerializeException, IOException {
 
         int r;
@@ -200,7 +214,7 @@ public class LEDHelper {
             SaveLedInfo(r, g, b, x, index);
         }
 
-        UpdateLeds();
+        //UpdateLeds();
 
     }
 
@@ -219,7 +233,7 @@ public class LEDHelper {
             SaveLedInfo(r, g, b, index, y);
         }
 
-        UpdateLeds();
+        //UpdateLeds();
 
     }
 
@@ -236,15 +250,15 @@ public class LEDHelper {
      */
     void ActivateColumnDynamic(int r, int g, int b, int x, int from, int to) throws OSCSerializeException, IOException {
 
-        for (int y = from; y <= to; y++) {
+        for (int y = to; y <= from; y++) {
             SaveLedInfo(r, g, b, x, y);
         }
 
-        UpdateLeds();
+        //UpdateLeds();
 
     }
 
-    /**
+     /**
      * Malt eine Zeile in dem angegebenen RBG-Wert an
      * @param r
      * @param g
@@ -259,17 +273,28 @@ public class LEDHelper {
             SaveLedInfo(r, g, b, x, index);
         }
 
-        UpdateLeds();
+        //UpdateLeds();
 
     }
 
+    /**
+     * Malt einen Teil von (from) bis (to) in Reihe Y in dem RGB-Wert an
+     * @param r
+     * @param g
+     * @param b
+     * @param y
+     * @param from
+     * @param to
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void ActivateRowDynamic(int r, int g, int b, int y, int from, int to) throws OSCSerializeException, IOException {
 
         for (int x = from; x <= to; x++) {
             SaveLedInfo(r, g, b, x, y);
         }
 
-        UpdateLeds();
+        //UpdateLeds();
 
     }
 }
