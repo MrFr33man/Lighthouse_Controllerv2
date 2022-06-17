@@ -35,9 +35,9 @@ public class LEDHelper {
      * @throws IOException
      */
     private LEDHelper() throws IOException {
-        oscPortOut = new OSCPortOut(new InetSocketAddress("149.222.206.225", 9000));
+        //oscPortOut = new OSCPortOut(new InetSocketAddress("149.222.206.225", 9000));
         //Localhost
-        //oscPortOut = new OSCPortOut(new InetSocketAddress("localhost", 9001));
+        oscPortOut = new OSCPortOut(new InetSocketAddress("localhost", 9001));
         oscPortOut.connect();
     }
 

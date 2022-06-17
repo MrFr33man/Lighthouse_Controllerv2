@@ -59,5 +59,9 @@ public class Main {
         if (tmp.contains("JumpNRun")) {
             animationHandler.JumpNRun();
         }
+
+        if (tmp.contains("EQ")) {
+            animationHandler.EQ();
+        }
     }
 }

@@ -315,4 +315,38 @@ public class AnimationHandler {
         }
     }
 
+    void EQ() throws InterruptedException, OSCSerializeException, IOException {
+
+        int[] y = {7, 4, 5, 7, 1, 4, 3, 3, 5, 7, 5, 3, 1, 0, 2, 4, 6, 6, 4, 3, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 3, 7};
+
+        int delay = 100;
+        for (int j = 0; j < 100; j++) {
+            helper.leds.clear();
+            for (int x = 0; x < 35; x++) {
+                int r = helper.randInt(0, 255);
+                int g = helper.randInt(0, 255);
+                int b = helper.randInt(0, 255);
+                helper.ActivateColumnDynamic(r, g, b, x, 7, y[x]);
+            }
+            helper.UpdateLeds();
+            Thread.sleep(delay);
+
+            for (int i = 0; i < y.length; i++) {
+                int erg = helper.randInt(0, 1);
+                if (erg == 0) {
+                    if (y[i] != 7) {
+                        y[i]++;
+                    } else {
+                        y[i]--;
+                    }
+                } else {
+                    if (y[i] != 0) {
+                        y[i]--;
+                    } else {
+                        y[i]++;
+                    }
+                }
+            }
+        }
+    }
 }
