@@ -83,14 +83,14 @@ public class LEDHelper {
     }
 
     /**
-     * SaveLedInfo erstellt eine LED und schreibt sie in das Array, dessen Inhalt später versendet wird
+     * saveLedInfo erstellt eine LED und schreibt sie in das Array, dessen Inhalt später versendet wird
      * @param r
      * @param g
      * @param b
      * @param xIndex 0-34
      * @param yIndex 0-7
      */
-    void SaveLedInfo(int r, int g, int b, int xIndex, int yIndex)
+    void saveLedInfo(int r, int g, int b, int xIndex, int yIndex)
     {
 
         Led tmp = new Led(r,g,b,xIndex,yIndex);
@@ -100,12 +100,12 @@ public class LEDHelper {
     }
 
     /**
-     * SendLedInfo verschickt das Array an LEDs per OSC
+     * sendLedInfo verschickt das Array an LEDs per OSC
      * @param led
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void SendLedInfo(Led led) throws OSCSerializeException, IOException {
+    void sendLedInfo(Led led) throws OSCSerializeException, IOException {
 
         if(ableToSend) {
             String path = "/lighthouse/lightx" + led.xIndex + "y" + led.yIndex;
@@ -134,24 +134,24 @@ public class LEDHelper {
     }
 
     /**
-     * UpdateLeds überprüft, ob die Farbe der LED überschrieben werden muss
+     * updateLeds überprüft, ob die Farbe der LED überschrieben werden muss
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void UpdateLeds() throws OSCSerializeException, IOException {
+    void updateLeds() throws OSCSerializeException, IOException {
 
         for (int x = 0; x <= 34; x++){
             for (int y = 0; y <= 7; y++){
                 for (int i = 0; i < leds.size(); i++) {
                     // Current Led gets changed
                     if (leds.get(i).gotIndex(x,y)){
-                        SendLedInfo(leds.get(i));
+                        sendLedInfo(leds.get(i));
                         i = leds.size();
                         break;
 
                     } // Clear
                     else if (i == leds.size()-1) {
-                        SendLedInfo(new Led(0,0,0,x,y));
+                        sendLedInfo(new Led(0,0,0,x,y));
 
                     }
                 }
@@ -175,10 +175,10 @@ public class LEDHelper {
     }
 
     /**
-     * ActivateColumnRandomColor aktiviert eine komplette Spalte an Leds in einer random Farbe.
+     * activateColumnRandomColor aktiviert eine komplette Spalte an Leds in einer random Farbe.
      * @param index
      */
-    void ActivateColumnRandomColor(int index) {
+    void activateColumnRandomColor(int index) {
 
         int r;
         int g;
@@ -196,20 +196,20 @@ public class LEDHelper {
                 b = randInt(0, 255);
             }
 
-            SaveLedInfo(r, g, b, index, y);
+            saveLedInfo(r, g, b, index, y);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 
     /**
-     * ActivateRowRandomColor aktiviert eine komplette Reihe an Leds in einer random Farbe.
+     * activateRowRandomColor aktiviert eine komplette Reihe an Leds in einer random Farbe.
      * @param index
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void ActivateRowRandomColor(int index) throws OSCSerializeException, IOException {
+    void activateRowRandomColor(int index) throws OSCSerializeException, IOException {
 
         int r;
         int g;
@@ -227,10 +227,10 @@ public class LEDHelper {
                 b = randInt(0, 255);
             }
 
-            SaveLedInfo(r, g, b, x, index);
+            saveLedInfo(r, g, b, x, index);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 
@@ -243,13 +243,13 @@ public class LEDHelper {
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void ActivateColumn(int r, int g, int b, int index) throws OSCSerializeException, IOException {
+    void activateColumn(int r, int g, int b, int index) throws OSCSerializeException, IOException {
 
         for (int y = 0; y <= 7; y++) {
-            SaveLedInfo(r, g, b, index, y);
+            saveLedInfo(r, g, b, index, y);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 
@@ -264,13 +264,13 @@ public class LEDHelper {
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void ActivateColumnDynamic(int r, int g, int b, int x, int from, int to) throws OSCSerializeException, IOException {
+    void activateColumnDynamic(int r, int g, int b, int x, int from, int to) throws OSCSerializeException, IOException {
 
         for (int y = to; y <= from; y++) {
-            SaveLedInfo(r, g, b, x, y);
+            saveLedInfo(r, g, b, x, y);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 
@@ -283,13 +283,13 @@ public class LEDHelper {
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void ActivateRow(int r, int g, int b, int index) throws OSCSerializeException, IOException {
+    void activateRow(int r, int g, int b, int index) throws OSCSerializeException, IOException {
 
         for (int x = 0; x <= 34; x++) {
-            SaveLedInfo(r, g, b, x, index);
+            saveLedInfo(r, g, b, x, index);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 
@@ -304,13 +304,13 @@ public class LEDHelper {
      * @throws OSCSerializeException
      * @throws IOException
      */
-    void ActivateRowDynamic(int r, int g, int b, int y, int from, int to) throws OSCSerializeException, IOException {
+    void activateRowDynamic(int r, int g, int b, int y, int from, int to) throws OSCSerializeException, IOException {
 
         for (int x = from; x <= to; x++) {
-            SaveLedInfo(r, g, b, x, y);
+            saveLedInfo(r, g, b, x, y);
         }
 
-        //UpdateLeds();
+        //updateLeds();
 
     }
 }
