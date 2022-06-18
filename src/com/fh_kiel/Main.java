@@ -38,7 +38,14 @@ public class Main {
         }
     }
 
-    /* incoming osc message are forwarded to the oscEvent method. */
+    /**
+     * Wird ausgelöst, wenn eine OSC-Message ankommt. Diese wird dann auf Inhalt geprüft und je nach Inhalt wird eine
+     * andere Animation ausgelöst
+     * @param theOscMessage
+     * @throws InterruptedException
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     static void oscEvent(OSCMessageEvent theOscMessage) throws InterruptedException, OSCSerializeException, IOException {
         /* print the address pattern and the typetag of the received OscMessage */
         System.out.println("### received an osc message.");

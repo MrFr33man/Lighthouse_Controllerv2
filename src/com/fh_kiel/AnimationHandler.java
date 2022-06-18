@@ -8,7 +8,7 @@ import java.io.IOException;
  * der Klasse LED in ein Array der LEDHelper schreiben, welches dann iterativ über OSC versendet wird
  * Das Lighthouse hat 8 Zeilen      --> x index 0-7
  * Das Lighthouse hat 35 Spalten    --> y index 0-34
- * @author Alexander Munkelt & Fabian Gusek
+ * @author Alexander Munkelt, Fabian Gusek, Felix Seeburg
  */
 public class AnimationHandler {
 
@@ -63,6 +63,9 @@ public class AnimationHandler {
 
         int delay = 100;
 
+        /**
+         * Male Umgebung und laufendes Männchen
+         */
         //Diverschen 64,110,122 Frame 1
         for (int j = 34; j >= 25; j--){
             Thread.sleep(delay);
@@ -101,6 +104,9 @@ public class AnimationHandler {
         }
 
 
+        /**
+         * Verwandlung
+         */
         helper.leds.clear();
         WriteUmgebung();
         //X18-22 Y1-5
@@ -183,6 +189,9 @@ public class AnimationHandler {
         helper.leds.clear();
         WriteUmgebung();
 
+        /**
+         * Fliegendes Männchen
+         */
         for (int a = 22; a >= -7; a--){
             Thread.sleep(50);
             helper.leds.clear();
@@ -315,6 +324,12 @@ public class AnimationHandler {
         }
     }
 
+    /**
+     * SwipeLeft ist eine der Animationen, die vom Nutzer durch eine Geste ausgelöst werden kann
+     * @throws InterruptedException
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     void EQ() throws InterruptedException, OSCSerializeException, IOException {
 
         int[] y = {7, 4, 5, 7, 1, 4, 3, 3, 5, 7, 5, 3, 1, 0, 2, 4, 6, 6, 4, 3, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 3, 7};
