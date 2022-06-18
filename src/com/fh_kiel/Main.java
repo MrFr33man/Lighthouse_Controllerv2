@@ -4,13 +4,19 @@ import com.illposed.osc.*;
 import com.illposed.osc.messageselector.OSCPatternAddressMessageSelector;
 import com.illposed.osc.transport.OSCPortIn;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
     private static OSCPortIn oscPortIn;
     private static MessageSelector oscPatternAddressMessageSelector;
+    private static MessageSelector selectorInfo;
     private static OSCMessageListener listener;
+    private static OSCMessageListener listenerTogether;
     private static AnimationHandler animationHandler;
+
+    public static boolean ableToSend = true;
 
     public static void main(String[] args) throws IOException, InterruptedException, OSCSerializeException {
         /* start oscP5, listening for incoming messages at port 8001 of OSCBroadcaster */
@@ -25,8 +31,14 @@ public class Main {
                 e.printStackTrace();
             }
         };
+
+        listenerTogether = event -> {
+            acceptMessage(event);
+        };
         oscPatternAddressMessageSelector = new OSCPatternAddressMessageSelector("/Unity");
+        selectorInfo = new OSCPatternAddressMessageSelector("/segi1/info");
         oscPortIn.getDispatcher().addListener(oscPatternAddressMessageSelector, listener);
+        oscPortIn.getDispatcher().addListener(selectorInfo, listenerTogether);
         oscPortIn.startListening();
 
         /**
@@ -62,6 +74,27 @@ public class Main {
 
         if (tmp.contains("EQ")) {
             animationHandler.EQ();
+        }
+    }
+
+    static void acceptMessage(OSCMessageEvent event) {
+        System.out.println("Info gotten from: " + event.getMessage().getAddress());
+        List<Object> data = event.getMessage().getArguments();
+        String info = data.get(0).toString();
+        System.out.println("Infodata: " + info);
+        if (!info.equalsIgnoreCase("enlightenme")) {
+            ableToSend = false;
+            Thread newThread = new Thread(() -> {
+                try {
+                    System.out.println("Stop sending");
+                    TimeUnit.SECONDS.sleep(5);
+                    ableToSend = true;
+                    System.out.println("Start sending");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            newThread.start();
         }
     }
 }

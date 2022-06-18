@@ -6,6 +6,8 @@ import java.net.*;
 import java.util.*;
 import java.io.IOException;
 
+import static com.fh_kiel.Main.ableToSend;
+
 /**
  * LEDHelper ist eine Helperklasse, die für das Handling der Objekte der Klasse LED zuständig ist.
  * Es enthält ein Array zur Speicherung eines Pakets an LEDs, welche dann per OSC versendet werden
@@ -105,16 +107,30 @@ public class LEDHelper {
      */
     void SendLedInfo(Led led) throws OSCSerializeException, IOException {
 
-        String path = "/lighthouse/lightx" + led.xIndex + "y" + led.yIndex;
+        if(ableToSend) {
+            String path = "/lighthouse/lightx" + led.xIndex + "y" + led.yIndex;
 
-        // sends from "localhost"
-        List<Object> args = new ArrayList<Object>(3);
-        args.add(led.r);
-        args.add(led.g);
-        args.add(led.b);
+            // sends from "localhost"
+            List<Object> args = new ArrayList<Object>(3);
+            args.add(led.r);
+            args.add(led.g);
+            args.add(led.b);
 
-        OSCMessage msg = new OSCMessage(path, args);
-        oscPortOut.send(msg);
+            OSCMessage msg = new OSCMessage(path, args);
+            oscPortOut.send(msg);
+
+            path = "/segi1/info";
+
+            args = new ArrayList<Object>(3);
+            args.add(led.r);
+            args.add(led.g);
+            args.add(led.b);
+
+            msg = new OSCMessage(path, args);
+            oscPortOut.send(msg);
+        } else {
+            System.out.println("Not sending because other service is using the Lighthouse");
+        }
     }
 
     /**
