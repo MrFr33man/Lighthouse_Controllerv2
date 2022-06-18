@@ -18,6 +18,14 @@ public class Main {
 
     public static boolean ableToSend = true;
 
+    /**
+     * In der Main werden der Empfangsport für den Listener festgelegt und wenn eine OSC-Message ankommt, wird ein Interrupt
+     * ausgelöst, der die OSC-Nachricht analysiert
+     * @param args
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws OSCSerializeException
+     */
     public static void main(String[] args) throws IOException, InterruptedException, OSCSerializeException {
         /* start oscP5, listening for incoming messages at port 8001 of OSCBroadcaster */
         oscPortIn = new OSCPortIn(8001);
@@ -84,6 +92,11 @@ public class Main {
         }
     }
 
+    /**
+     * Diese Methode prüft, ob der Übertragungskanal auf das LightHouse frei ist. Wenn für fünf Sekunden niemand
+     * an das LighHouse gesendet hat, können die eigenen OSC-Nachrichten gesendet werden
+     * @param event
+     */
     static void acceptMessage(OSCMessageEvent event) {
         System.out.println("Info gotten from: " + event.getMessage().getAddress());
         List<Object> data = event.getMessage().getArguments();
