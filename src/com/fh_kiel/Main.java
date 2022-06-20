@@ -75,19 +75,19 @@ public class Main {
 
         System.out.println("\n" + tmp);
 
-        if (tmp.contains("swipeRight")) {
+        if (tmp.contains("SwipeRight")) {
             animationHandler.swipeRight();
         }
 
-        if (tmp.contains("swipeLeft")) {
+        if (tmp.contains("SwipeLeft")) {
             animationHandler.swipeLeft();
         }
 
-        if (tmp.contains("jumpNRun")) {
+        if (tmp.contains("JumpNRun")) {
             animationHandler.jumpNRun();
         }
 
-        if (tmp.contains("eq")) {
+        if (tmp.contains("EQ")) {
             animationHandler.eq();
         }
     }
