@@ -18,6 +18,14 @@ public class Main {
 
     public static boolean ableToSend = true;
 
+    /**
+     * In der Main werden der Empfangsport für den Listener festgelegt und wenn eine OSC-Message ankommt, wird ein Interrupt
+     * ausgelöst, der die OSC-Nachricht analysiert
+     * @param args
+     * @throws IOException
+     * @throws InterruptedException
+     * @throws OSCSerializeException
+     */
     public static void main(String[] args) throws IOException, InterruptedException, OSCSerializeException {
         /* start oscP5, listening for incoming messages at port 8001 of OSCBroadcaster */
         oscPortIn = new OSCPortIn(8001);
@@ -50,7 +58,14 @@ public class Main {
         }
     }
 
-    /* incoming osc message are forwarded to the oscEvent method. */
+    /**
+     * Wird ausgelöst, wenn eine OSC-Message ankommt. Diese wird dann auf Inhalt geprüft und je nach Inhalt wird eine
+     * andere Animation ausgelöst
+     * @param theOscMessage
+     * @throws InterruptedException
+     * @throws OSCSerializeException
+     * @throws IOException
+     */
     static void oscEvent(OSCMessageEvent theOscMessage) throws InterruptedException, OSCSerializeException, IOException {
         /* print the address pattern and the typetag of the received OscMessage */
         System.out.println("### received an osc message.");
@@ -60,23 +75,28 @@ public class Main {
 
         System.out.println("\n" + tmp);
 
-        if (tmp.contains("SwipeRight")) {
-            animationHandler.SwipeRight();
+        if (tmp.contains("swipeRight")) {
+            animationHandler.swipeRight();
         }
 
-        if (tmp.contains("SwipeLeft")) {
-            animationHandler.SwipeLeft();
+        if (tmp.contains("swipeLeft")) {
+            animationHandler.swipeLeft();
         }
 
-        if (tmp.contains("JumpNRun")) {
-            animationHandler.JumpNRun();
+        if (tmp.contains("jumpNRun")) {
+            animationHandler.jumpNRun();
         }
 
-        if (tmp.contains("EQ")) {
-            animationHandler.EQ();
+        if (tmp.contains("eq")) {
+            animationHandler.eq();
         }
     }
 
+    /**
+     * Diese Methode prüft, ob der Übertragungskanal auf das LightHouse frei ist. Wenn für fünf Sekunden niemand
+     * an das LighHouse gesendet hat, können die eigenen OSC-Nachrichten gesendet werden
+     * @param event
+     */
     static void acceptMessage(OSCMessageEvent event) {
         System.out.println("Info gotten from: " + event.getMessage().getAddress());
         List<Object> data = event.getMessage().getArguments();
